@@ -9,14 +9,14 @@ app.debug = True
 def hello():
     return app.send_static_file('index.html')
 
-@app.route("/color/", methods=["PUT"])
+@app.route("/colors/", methods=["PUT"])
 def switch_pin():
     json_req = request.get_json()
     params = dict(json_req)
     Flash(params["color"], params["action"])
     return "The {} is {}".format(params["color"], params["action"]), 204
 
-@app.route("/color/", methods=["GET"])
+@app.route("/colors/", methods=["GET"])
 def get_pin_status():
     pin_status = Status()
     return jsonify(pin_status)
