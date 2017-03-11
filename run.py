@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, current_app
-from gpio import Flash
+from gpio import Flash, Status
 from ServerExceptions import BadRequestException
 
 app = Flask(__name__)
@@ -15,6 +15,11 @@ def switch_pin():
     params = dict(json_req)
     Flash(params["color"], params["action"])
     return "The {} is {}".format(params["color"], params["action"]), 204
+
+@app.route("/color/", methods=["GET"])
+def get_pin_status():
+    pin_status = Status()
+    return jsonify(pin_status)
 
 @app.errorhandler(BadRequestException)
 def handle_server_exception(error):
