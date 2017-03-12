@@ -1,9 +1,13 @@
 import React from 'react'
+import ColorState from './ColorState'
+import ColorButton from './ColorButton'
 
 const App = () => (
 <div>
     <ColorState/>
-    Try to click the buttons!
+    <ColorButton color="red"/>
+    <ColorButton color="green"/>
+    <ColorButton color="blue"/>
 </div>
 )
 

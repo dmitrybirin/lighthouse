@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { getColors, getIsFetching }  from '../reducers'
 import * as actions from '../actions'
+import ShowColors from './ShowColors'
 
 class ColorState extends React.Component {
 
@@ -9,7 +11,9 @@ class ColorState extends React.Component {
     }
 
     // componentDidUpdate(prevProps){
-    //     if (this.props.accountId !== prevProps.accountId){
+    //     console.log(this.props.colors)
+    //     console.log(prevProps.colors)
+    //     if (this.props.colors !== prevProps.colors){
     //         this.fetchData()
     //     }
     // }
@@ -31,15 +35,15 @@ class ColorState extends React.Component {
         //             onRetry={() => this.fetchData()}
         //     />
         // }
-        return <div>{colors}</div>
+        return <ShowColors colors={colors}/>
     }
 }
 
 const mapStateToProps = (state) => 
-    {
+    ({
         colors: getColors(state),
         isFetching: getIsFetching(state)
-    }
+    })
 
 ColorState = connect(
     mapStateToProps,

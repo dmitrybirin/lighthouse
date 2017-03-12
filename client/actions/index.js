@@ -3,7 +3,7 @@ import { getIsFetching, getColor } from '../reducers'
 
 export const toggleColor = (color) => (dispatch, getState) => {
 
-    getActionToPut = (color) => {
+    const getActionToPut = (color) => {
         return getColor(getState(), color) ? 'off': 'on'
     }
 
@@ -16,24 +16,22 @@ export const toggleColor = (color) => (dispatch, getState) => {
         color
     })
 
-    return fetch('/colors/', {
+    fetch('/colors/',{
                 method: "PUT",
                 body: JSON.stringify({color:color, action: getActionToPut(color)}),
                 headers: {
                     "Content-Type": "application/json"
-                }}).then(
-        response => 
+                }}).then(response => {
             dispatch({
                 type:'COLOR_TOGGLE_SUCCESS',
-                color,
-                response 
-        }),
-        error =>
+                color
+            })
+        })
+        .catch(error =>
             dispatch({
                 type:'COLOR_TOGGLE_FAILURE',
                 message: error.message || 'Something went wrong'
-            })
-    )
+            }))
 }
 
 export const fetchColors = () => (dispatch, getState) => {
@@ -43,20 +41,23 @@ export const fetchColors = () => (dispatch, getState) => {
     }
     
     dispatch({
-        type:'COLORS_FETCH_REQUEST',
-        color
+        type:'COLORS_FETCH_REQUEST'
     })
 
-    return fetch('/colors/').then(
-        response => 
+    fetch('/colors/',{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }}).then(
+        response => response.json()).then(response => {
             dispatch({
                 type:'COLORS_FETCH_SUCCESS',
-                response 
-        }),
-        error =>
+                response
+            })
+        })
+        .catch(error =>
             dispatch({
                 type:'COLORS_FETCH_FAILURE',
                 message: error.message || 'Something went wrong'
-            })
-    )
+            }))
 }

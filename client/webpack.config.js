@@ -5,6 +5,7 @@ module.exports = {
   entry: ['./index.js'],
   output: {
     path: path.resolve(__dirname, '../static/js'),
+    // publicPath: '../static/',
     filename: 'bundle.js'
   },
   module : {
@@ -27,5 +28,8 @@ module.exports = {
   },
   watchOptions: {
     ignore: /node_modules/
-  }
+  },
+  devServer: {
+    contentBase: "../static"
+},
 }

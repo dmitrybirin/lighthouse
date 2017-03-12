@@ -16,4 +16,4 @@ const createColor = (color) => {
 
 export default createColor
 
-export const getColor = (state) =>  state.colorState
+export const getColor = (state) =>  state
