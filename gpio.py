@@ -46,6 +46,3 @@ def Flash(color, action):
 
 def Status():
 	return get_colors()
-
-if len(sys.argv)>1:
-	flash(color_map[sys.argv[1]], sys.argv[2])
