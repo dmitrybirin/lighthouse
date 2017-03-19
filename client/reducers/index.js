@@ -30,6 +30,8 @@ export default app
 
 export const getColor = (state, color) => fromCreateColor.getColor(state.colors[color])
 
+export const getIsPressed = (state, color) => state.colors[color].isPressed
+
 export const getColors = (state) => state.colors
 
 export const getIsFetching = (state) => state.isFetching

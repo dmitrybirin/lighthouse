@@ -1,10 +1,15 @@
-import { getIsFetching, getColor } from '../reducers'
-// import * as api from '../api'
+import { getIsFetching, getColor, getIsPressed } from '../reducers'
 
-export const toggleColor = (color) => (dispatch, getState) => {
+const keyColorMap = {
+    "ArrowLeft": "red",
+    "ArrowUp": "green",
+    "ArrowRight": "blue"
+}
+
+const toggleColor = (color, colorAction) => (dispatch, getState) => {
 
     const getActionToPut = (color) => {
-        return getColor(getState(), color) ? 'off': 'on'
+        return colorAction ? 'on' : 'off'
     }
 
     if (getIsFetching(getState())) {
@@ -12,7 +17,7 @@ export const toggleColor = (color) => (dispatch, getState) => {
     }
     
     dispatch({
-        type:'COLOR_TOGGLE_REQUEST',
+        type:'COLOR_SWITCH_REQUEST',
         color
     })
 
@@ -23,16 +28,51 @@ export const toggleColor = (color) => (dispatch, getState) => {
                     "Content-Type": "application/json"
                 }}).then(response => {
             dispatch({
-                type:'COLOR_TOGGLE_SUCCESS',
+                type:'COLOR_SWITCH_SUCCESS',
+                colorAction: colorAction,
                 color
+                
             })
         })
         .catch(error =>
             dispatch({
-                type:'COLOR_TOGGLE_FAILURE',
+                type:'COLOR_SWITCH_FAILURE',
                 message: error.message || 'Something went wrong'
             }))
 }
+
+export const keyDown = (code) => (dispatch, getState) => {
+    
+    const keyColor = keyColorMap[code]        
+
+    if (getIsPressed(getState(), keyColor)) {
+        return Promise.resolve()
+    }
+
+    dispatch({
+        type:'KEY_DOWN',
+        color: keyColor
+    })
+
+    toggleColor(keyColor, true)(dispatch, getState)
+}
+
+export const keyUp = (code) => (dispatch, getState) => {
+    
+    const keyColor = keyColorMap[code]        
+
+    if (!getIsPressed(getState(), keyColor)) {
+        return Promise.resolve()
+    }
+
+    dispatch({
+        type:'KEY_UP',
+        color: keyColor
+    })
+
+    toggleColor(keyColor, false)(dispatch, getState)
+}
+
 
 export const fetchColors = () => (dispatch, getState) => {
 
