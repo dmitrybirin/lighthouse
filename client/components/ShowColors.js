@@ -2,8 +2,6 @@ import React from 'react'
 
 const getColor = ({colors}) => {
 
-    console.log(colors)
-
     if (colors.red && colors.green && colors.blue) {
         return "white light"
     }
@@ -26,7 +24,7 @@ const getColor = ({colors}) => {
         return "blue"
     }
     if (!colors.red && !colors.green && !colors.blue) {
-        return "dark"
+        return "black"
     }
     else {
         return "unknown"
@@ -40,7 +38,8 @@ const ShowColors = (colors) => {
             "width": "100px",
             "height": "100px",
             "borderRadius": "50px",
-            "background":getColor(colors) || "white" 
+	    "color": getColor(colors) === 'black' ? "white" : "black",
+            "background":getColor(colors) || "white"
             }}>{getColor(colors)}</div>
     </div>
 }
