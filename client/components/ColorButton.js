@@ -6,6 +6,7 @@ import * as actions from '../actions'
 let ColorButton = ({colors, color, isFetching, toggleColor}) => (
 <div>
     <button 
+    style={{cursor:"pointer"}}
     onClick={()=> toggleColor(color)}
     disabled={isFetching}
         >TURN {color.toUpperCase()} {colors[color]? "OFF": "ON"}</button>
