@@ -33,4 +33,4 @@ def handle_server_exception(error):
     return response
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=4342)
+    app.run(host='0.0.0.0', port=os.environ['PORT'])

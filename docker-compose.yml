@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  server:
+    image: python:alpine3.8
+    volumes:
+      - .:/app
+    ports:
+      - 4342:4342
+    command: "pyenv install"
+    environment:
+      PORT: "4342"
+    network_mode: bridge
+  builder:
+    image: node:8.15.0-jessie
+    ports:
+      - 5672:5672
+      - 15672:15672
+    command: "yarn dev"
+    environment:
+      SERVER_PORT: 4342
+    network_mode: bridge

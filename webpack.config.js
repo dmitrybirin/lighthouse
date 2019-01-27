@@ -1,12 +1,7 @@
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const path = require('path');
 
 module.exports = {
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'static')
-  },
 	module: {
 		rules: [
 			{
@@ -35,9 +30,7 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: {
-    contentBase: './static',
-    proxy: {
-      '/colors': `http://localhost:${process.env.SERVER_PORT}`
-    }
+		contentBase: './dist',
+		hot: true,
 	},
 }
