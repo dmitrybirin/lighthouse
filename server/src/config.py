@@ -1,9 +1,9 @@
 import RPi.GPIO as GPIO
 
 color_map = {
-	"blue":18,
+	"blue":14,
 	"green":15,
-	"red":14
+	"red":18
 }
 
 action_map = {

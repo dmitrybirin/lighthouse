@@ -1,7 +1,22 @@
 import os
+import platform
 from flask import Flask, request, jsonify, send_from_directory
-from gpio import Flash, Status
 from ServerExceptions import BadRequestException
+
+system_info = platform.uname()
+if "raspi" in system_info:
+    print("Running on raspberry pi. Loading GPIO module.")
+    from gpio import Flash, Status
+else:
+    print("Running on some other posix system. Mocking GPIO module.")
+    def Flash(color, action):
+	    print("blink with {} to {} position".format(color, action))
+
+    def Status():
+	    return dict()
+
+app = Flask(__name__, static_url_path='')
+
 
 app = Flask(__name__, static_folder='static')
 app.debug = True
