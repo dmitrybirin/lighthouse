@@ -2,7 +2,7 @@ FROM python:3.7.2-alpine3.9
 
 WORKDIR /app
 COPY src/requirements.prod.txt /app/requirements.prod.txt
-RUN pip3.7 install -r requirements.txt
+RUN pip3.7 install -r requirements.prod.txt
 
 USER nobody
 ENTRYPOINT ["python3.7"]
