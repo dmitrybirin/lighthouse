@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  server:
+    build: 
+      context: server
+      dockerfile: Dockerfile.prod
+    volumes:
+      - $PWD/server/src:/app
+      - $PWD/client/static:/app/static
+    ports:
+      - 4342:4342
+    environment:
+      PORT: "4342"
+    network_mode: bridge
+  builder:
+    image: node:8.15.0-jessie
+    volumes:
+      - $PWD/client:/app
+    working_dir: /app
+    ports:
+      - 5672:5672
+      - 15672:15672
+    command: "yarn dev"
+    environment:
+      SERVER_PORT: 4342
+    network_mode: bridge
